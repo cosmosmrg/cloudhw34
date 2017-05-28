@@ -8,9 +8,13 @@ import java.util.Scanner;
  */
 public class App 
 {
-    public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String MYSQL_URL = "jdbc:mysql://localhost/myDropbox?"
-            + "user=root&password=root";
+    private static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
+    private static String dbName = "myDropbox";
+    private static String userName = "root";
+    private static String password = "12345678";
+    private static String hostname = "mydropbox.czrol2mx4fal.ap-southeast-1.rds.amazonaws.com";
+    private static String port = "3306";
+    private static final String MYSQL_URL = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
 
     public static void main( String[] args ) throws Exception
     {
@@ -31,38 +35,58 @@ public class App
             String commandIN = sin.nextLine();
             if(commandIN.contains("newuser")){
                 String[] commands = commandIN.split(" ");
-                if(commands[2].equals(commands[3])){
-                    boolean re = sqlJava.addUser(commands[1],commands[2]);
-                    if(re){
-                        System.out.println("OK");
+                try{
+                    if(commands[2].equals(commands[3])){
+                        boolean re = sqlJava.addUser(commands[1],commands[2]);
+                        if(re){
+                            System.out.println("OK");
+                        }
+                        else {
+                            System.out.println("cannot use this user :"+commands[1]);
+                        }
                     }
-                    else {
-                        System.out.println("cannot use this user :"+commands[1]);
+                    else{
+                        System.out.println("password mismatch");
                     }
                 }
-                else{
-                    System.out.println("password mismatch");
+                catch (Exception e){
+                    System.out.println("command is not valid");
+                    System.out.println("newuser <username> <password> <re-type password>");
                 }
+
 
             }
             else if(commandIN.contains("login")){
                 String[] commands = commandIN.split(" ");
-                String authen = sqlJava.authen(commands[1],commands[2]);
-                if(authen.equals("OK")){
-                    username = commands[1];
+                try{
+                    String authen = sqlJava.authen(commands[1],commands[2]);
+                    if(authen.equals("OK")){
+                        username = commands[1];
+                    }
+                    System.out.println(authen);
+                }catch (Exception e){
+                    System.out.println("command is not valid");
+                    System.out.println("login <username> <password>");
                 }
-                System.out.println(authen);
+
             }
             else if(commandIN.contains("put")){
                 String[] commands = commandIN.split(" ");
-                if(!username.isEmpty()){
-                    boolean re = bucket.addObjectToBucket(username,commands[1],commands[1]);
-                    if(re){
-                        System.out.println("OK");
+                try{
+                    if(!username.isEmpty()){
+                        boolean re = bucket.addObjectToBucket(username,commands[1],commands[1]);
+                        if(re){
+                            System.out.println("OK");
+                        }
+                    }
+                    else{
+                        System.out.println("pls login");
                     }
                 }
-                else{
-                    System.out.println("pls login");
+                catch (Exception e){
+                    System.out.println("command is not valid");
+                    System.out.println("put <filename>");
+                    System.out.println("file must be at the same location with the program file");
                 }
 
             }
@@ -76,14 +100,20 @@ public class App
             }
             else if(commandIN.contains("get")){
                 String[] commands = commandIN.split(" ");
-                if(!username.isEmpty()){
-                    if(bucket.downloadFile(username,commands[1])){
-                        System.out.println("OK");
+                try{
+                    if(!username.isEmpty()){
+                        if(bucket.downloadFile(username,commands[1])){
+                            System.out.println("OK");
+                        }
                     }
+                    else{
+                        System.out.println("pls login");
+                    }
+                }catch (Exception e){
+                    System.out.println("command is not valid");
+                    System.out.println("get <filename>");
                 }
-                else{
-                    System.out.println("pls login");
-                }
+
             }
             else if(commandIN.contains("logout")){
                 username = "";

@@ -2,6 +2,24 @@
 submitted
 
   files: App
+    func: main()
+        start the application by connect to db and s3bucket
+        then take the user input
+            - newuser <username> <password> <re-type password>
+                if adding successfully
+                    >> OK
+                if username is already taken
+                    >> cannot use this user : <username>
+                if password and re-type password are not the same
+                    >> password mismatch
+            - login <username> <password>
+                if there is the a user with this password
+                    >> OK
+                if the password is wrong
+                    >> wrong password
+                if there is no user match
+                    >> this username is not in the system
+            -
 
   files: Bucket
     func: createBucket()
@@ -11,25 +29,6 @@ submitted
         as username-filename in the bucket
     func: viewObjectsInBucket()
     func: downloadFile()
-
-  files: MySQLJava
-    func: readData()
-        this function initialize the hashmap in
-        this class to store all user from getResultSet() in that hashmap
-    func: getResultSet()
-        this function read all row in users table and transform it to be hashmap
-        where username is key and password as value
-    func: authen()
-        put username and password and return whether it is mismatch,
-        correct pass,or no username
-    func: addUser()
-        put in username and password and store it in db
-    func: insertDB()
-        called by addUser() to actually insert username and password to db
-    func: hasUser()
-        check with hashmap whether there is username or not
-    func: close()
-        close connection to db
 
 • How to run your code
     java -jar myDropbox_5681091.jar

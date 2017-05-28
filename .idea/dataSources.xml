@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="myDropbox@localhost" uuid="759ae304-07a2-4324-8706-66670008270a">
+    <data-source source="LOCAL" name="myDropbox@mydropbox.czrol2mx4fal.ap-southeast-1.rds.amazonaws.com" uuid="9fb2b002-9089-4d54-ade3-a70e65de9581">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/myDropbox</jdbc-url>
+      <jdbc-url>jdbc:mysql://mydropbox.czrol2mx4fal.ap-southeast-1.rds.amazonaws.com:3306/myDropbox</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
